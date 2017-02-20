@@ -1,0 +1,450 @@
+%!TEX ROOT = presentation.tex
+
+\ProvidesPackage{phstyle}%
+  [2017/02/15 Made by Wesley Peijnenburg, this is not an official template]
+% The latest version: https://github.com/WesleyPeijnenburg/TUe_Latex_Template
+
+
+\usepackage[english]{babel}
+\let\Tiny=\tiny% The Tiny font is not available, this command avoids using it
+
+% Typically used packages:
+% Using minipages for figures, instead of subfigures is recommended!
+\usepackage{amsmath}   % Subequations
+\usepackage{mathtools} % Standard math tools
+
+\PassOptionsToPackage{hidelinks}{hyperref}% Hide links
+
+% \usepackage[]{algorithm2e} % For pseudo algorithms
+
+% \usepackage{animate}% For animations
+
+
+% Bibliography:
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+\setbeamertemplate{frametitle continuation}[from second]
+
+
+% Required packages:
+% Official font of the TU/e is arial, see:
+% https://intranet.tue.nl/universiteit/diensten/communicatie-expertise-centrum/huisstijl-middelen/huisstijlmiddelen/powerpoint-presentaties/
+\usepackage[no-math]{fontspec}
+\setmainfont{Arial}
+
+% Comment this if you want the "Figure :" tag in front of figure caption
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+
+% Move the content of the slide downwards by a specified distance:
+\setbeamertemplate{headline}{\vspace{5mm}}
+
+\usepackage{tikz} % For drawing the background shapes
+  \usetikzlibrary{positioning}
+\usepackage{varwidth} % For text fields on the background shapes
+\RequirePackage{ifthen}
+\RequirePackage{xcolor} % To set theme colour as tue colour
+\setbeamertemplate{navigation symbols}{} %remove navigation symbols
+
+% Standard (minimal) background to be used:
+\usebackgroundtemplate{\drawbackground}
+
+% % Set font in table of contents, optional:
+% \setbeamerfont{section in toc}{size=\bfseries\normalsize }
+% \setbeamerfont*{section in toc}{size=\small}%
+% \setbeamercolor{subsection in toc}{fg=TueLogoBlue}
+
+% Solution for a latex issue solution for figure scaling:
+%  Code that will not work:
+%    \includegraphics[height=\logoheight]{\externalimage}
+%  Code that will work:
+%    \includegraphics[height=\logowidth*\real{\logohw}]{\externalimage}
+
+
+% Define the colors.
+\definecolor{TueLogoRed}{rgb}{ 0.824, 0.122, 0.384}
+\definecolor{TueCorpRed}{rgb}{ 0.933, 0.106, 0.176}
+\definecolor{TueLogoBlue}{rgb}{0.199, 0.223, 0.551}
+\colorlet{themecolor}{TueLogoBlue}
+\colorlet{themetextcolor}{TueLogoRed}
+
+
+%% Title page and general variables
+\newcommand{\TitleLRBord}{4mm}% Left and RIght border
+\newcommand{\TitleUpperBord}{12mm}% Upper border on title page
+\newcommand{\UpperBord}{8mm}%  Upper border on pages
+\newcommand{\LowerBorder}{7mm}% Lower border on pages
+\newcommand{\DiagLineNEpointTitl}{0.65\paperwidth}% North East corner of the polyline that draws the slanted line (0.5469 officially)
+\newcommand{\DiagLineNEpointSlide}{0.27\paperwidth}% North East corner of the polyline that draws the slanted line
+\newcommand{\DiagLineNEpointThank}{0.55\paperwidth}% North East corner of the polyline that draws the slanted line
+\newcommand{\DiagLineAngle}{tan(deg(15.9875))}% The decimals are necesssary, unfortunately
+\newcommand{\ThankyouTextWidth}{0.4\paperwidth}% Lower border on title page
+\newcommand{\AuthorTextWidth}{0.40\paperwidth}% Lower border on title page
+\newcommand{\DateTextWidth}{0.40\paperwidth}% Lower border on title page
+\newcommand{\ThinLineThk}{0.15mm}% Thickness of the thin line
+\newcommand{\ThinnerLineThk}{0.07mm}% Thickness of the thin line
+\newcommand{\tol}{0.03mm}% A small offset to remove super small gaps in vector graphics
+
+%% LOGO
+\newcommand{\logohw}{0.2129}% Height to width ratio of the logo
+\newcommand{\logosl}{0.0227}% 0.0227 is the ratio (width of slanted line)/(total logo width)
+\newcommand{\logoslstrt}{0.1925}% The ratio between starting point of slanted line on top, vs total width
+%% LOGO TITLE
+\newcommand{\logowidth}{45mm}% Width of logo on titlepage
+\newcommand{\logoheight}{\logowidth*\logohw}% Height of logo on titlepage
+\newcommand{\LogoLineThk}{\logosl*\logowidth}% Thickness of the slanted line in the logo
+%% LOGO Regular slides
+\newcommand{\logowidthslides}{30mm}%
+\newcommand{\logoheightslides}{\logohw*\logowidthslides}%
+\newcommand{\LogoLineThkslides}{\logosl*\logowidthslides}% Thickness of the slanted line in the logo
+\newcommand{\latex}{\LaTeX~}% Standard latex symbol doesn't have a space after it
+
+% Draw the diagonal line
+\newcommand{\DrawLineDiag}{ % Angle of slanted line is 74 degrees
+  \pgfmathsetmacro\hdiff{(\paperheight)*\DiagLineAngle} % 90-74 = 16
+  \filldraw[draw=none, fill=TueLogoRed]% Order: NW NE SE SW
+     (\DiagLineNEpointTitl                    ,0)%
+  -- (\DiagLineNEpointTitl+\ThinLineThk       ,0)%
+  -- (\DiagLineNEpointTitl+\ThinLineThk-\hdiff,-\paperheight)%
+  -- (\DiagLineNEpointTitl-\hdiff             ,-\paperheight);%
+  }
+% Draw the diagonal line on the thank you page
+\newcommand{\DrawLineDiagThank}{ % Angle of slanted line is 74 degrees
+  \pgfmathsetmacro\hdiff{(\paperheight)*\DiagLineAngle} % 90-74 = 16
+  \filldraw[draw=none, fill=TueLogoRed]% Order: NW NE SE SW
+     (\DiagLineNEpointThank                    ,0)%
+  -- (\DiagLineNEpointThank+\ThinLineThk       ,0)%
+  -- (\DiagLineNEpointThank+\ThinLineThk-\hdiff,-\paperheight)%
+  -- (\DiagLineNEpointThank-\hdiff             ,-\paperheight);%
+  }
+% Draw the upper horizontal line title slide
+\newcommand{\DrawLineHorTop}{ % Angle of slanted line is 74 degrees
+  \filldraw[draw=none, fill=TueLogoRed]% Order: NW NE SE SW
+     (0          ,-\TitleUpperBord)%
+  -- (\paperwidth,-\TitleUpperBord)%
+  -- (\paperwidth,-\TitleUpperBord-\ThinLineThk)%
+  -- (0          ,-\TitleUpperBord-\ThinLineThk);%
+  }
+% Draw the upper horizontal line regular slides
+\newcommand{\DrawLineHorTopReg}{ % Angle of slanted line is 74 degrees
+  \filldraw[draw=none, fill=TueLogoRed]% Order: NW NE SE SW
+     (0          ,-\UpperBord)%
+  -- (\paperwidth,-\UpperBord)%
+  -- (\paperwidth,-\UpperBord-\ThinnerLineThk)%
+  -- (0          ,-\UpperBord-\ThinnerLineThk);%
+  }
+% Draw the lower horizontal line on regular pages
+\newcommand{\DrawLineHorBotReg}{ % Angle of slanted line is 74 degrees
+  \filldraw[draw=none, fill=TueLogoRed]% Order: NW NE SE SW
+     (0          ,-\paperheight+\LowerBorder)%
+  -- (\paperwidth,-\paperheight+\LowerBorder)%
+  -- (\paperwidth,-\paperheight+\LowerBorder+\ThinnerLineThk)%
+  -- (0          ,-\paperheight+\LowerBorder+\ThinnerLineThk);%
+  }
+% Draw the lower horizontal line on title page
+\newcommand{\DrawLineHorBot}{ % Angle of slanted line is 74 degrees
+  \filldraw[draw=none, fill=TueLogoRed]% Order: NW NE SE SW
+     (0          ,-\paperheight+\LowerBorder)%
+  -- (\paperwidth,-\paperheight+\LowerBorder)%
+  -- (\paperwidth,-\paperheight+\LowerBorder+\ThinLineThk)%
+  -- (0          ,-\paperheight+\LowerBorder+\ThinLineThk);%
+  }
+% Draw the logo on the title slide
+\newcommand{\DrawLogoTitle}{ % Angle of slanted line is 74 degrees
+  \pgfmathsetmacro\hdiff{(\TitleUpperBord-\logoheight)*\DiagLineAngle} % 90-74 = 16
+   \node at (\logoslstrt*\logowidth+\DiagLineNEpointTitl-\hdiff-\LogoLineThk+\tol%
+     ,-\TitleUpperBord+0.5*\logoheight-\tol)%
+     {\includegraphics[width=\logowidth]{logos/TueLogo}};
+  }
+% Draw the external logo on the title slide
+\newcommand{\DrawExternalImageTitl}{ % Angle of slanted line is 74 degrees
+  \pgfmathsetmacro\extscale{0.85}%
+  \pgfmathsetmacro\extdiff{(1-\extscale)/2}%
+  \pgfmathsetmacro\hdiff{(\TitleUpperBord-0.5*\logoheight)*\DiagLineAngle} % 90-74 = 16
+   \node at (0.5*\DiagLineNEpointTitl-0.5*\hdiff-0.5*\logoslstrt*\logowidth,%
+      -\TitleUpperBord+0.5*\logoheight*\extscale+\extdiff*\logoheight)%
+     {\includegraphics[height=(\logowidth*\real{\logohw}*\real{\extscale})]{\externalimage}};
+  }
+% Draw the external logo on the thank you slide
+\newcommand{\DrawExternalImageThank}{ % Angle of slanted line is 74 degrees
+  \pgfmathsetmacro\extscale{0.85}%
+  \pgfmathsetmacro\extdiff{(1-\extscale)/2}%
+  \pgfmathsetmacro\hdiff{(\TitleUpperBord-0.5*\logoheight)*\DiagLineAngle} % 90-74 = 16
+   \node at (0.5*\DiagLineNEpointThank-0.5*\hdiff-0.5*\logoslstrt*\logowidth,%
+      -\TitleUpperBord+0.5*\logoheight*\extscale+\extdiff*\logoheight)%
+     {\includegraphics[height=(\logowidth*\real{\logohw}*\real{\extscale})]{\externalimage}};
+  }
+% Draw the logo on the thank you slide
+\newcommand{\DrawLogoThank}{ % Angle of slanted line is 74 degrees
+  \pgfmathsetmacro\hdiff{(\TitleUpperBord-\logoheight)*\DiagLineAngle} % 90-74 = 16
+   \node at (\logoslstrt*\logowidth+\DiagLineNEpointThank-\hdiff-\LogoLineThk+\tol%
+     ,-\TitleUpperBord+0.5*\logoheight-\tol)%
+     {\includegraphics[width=\logowidth]{logos/TueLogo}};
+  }
+% Draw largest red area on the left in the title page
+\newcommand{\DrawTitleWestArea}{ % Angle of slanted line is 74 degrees
+  \pgfmathsetmacro\hdifftop{\TitleUpperBord*\DiagLineAngle} % 90-74 = 16
+  \pgfmathsetmacro\hdiffbot{(\paperheight-\LowerBorder)*\DiagLineAngle} % 90-74 = 16
+  \filldraw[draw=none, fill=TueCorpRed]% Order: NW NE SE SW
+     (0                              ,-\TitleUpperBord)%
+  -- (\DiagLineNEpointTitl-\hdifftop+\tol,-\TitleUpperBord)%
+  -- (\DiagLineNEpointTitl-\hdiffbot+\tol,-\paperheight+\LowerBorder)%
+  -- (0                              ,-\paperheight+\LowerBorder);%
+  }
+% Draw largest red area on the left in the title page
+\newcommand{\DrawThankWestArea}{ % Angle of slanted line is 74 degrees
+  \pgfmathsetmacro\hdifftop{\TitleUpperBord*\DiagLineAngle} % 90-74 = 16
+  \pgfmathsetmacro\hdiffbot{(\paperheight-\LowerBorder)*\DiagLineAngle} % 90-74 = 16
+  \filldraw[draw=none, fill=TueCorpRed]% Order: NW NE SE SW
+     (0                              ,-\TitleUpperBord)%
+  -- (\DiagLineNEpointThank-\hdifftop+\tol,-\TitleUpperBord)%
+  -- (\DiagLineNEpointThank-\hdiffbot+\tol,-\paperheight+\LowerBorder)%
+  -- (0                              ,-\paperheight+\LowerBorder);%
+  }
+% Where innovation starts (title page)
+\newcommand{\TitleInnovStart}{ % Angle of slanted line is 74 degrees
+  \pgfmathsetmacro\hdiffbot{(\paperheight-\LowerBorder)*\DiagLineAngle} % 90-74 = 16
+  \tikzstyle{block} = [draw=none, color = TueLogoBlue,text centered]
+  \node [block,anchor= west] at (\DiagLineNEpointTitl-\hdiffbot, (0.5*\LowerBorder-\paperheight) {%
+    \scriptsize{{Where innovation starts}}
+    };
+  }
+% Where innovation starts (thank you page)
+\newcommand{\ShowDepartmentThank}{ % Angle of slanted line is 74 degrees
+  \pgfmathsetmacro\hdiffbot{(\paperheight-\LowerBorder)*\DiagLineAngle} % 90-74 = 16
+  \tikzstyle{block} = [draw=none, color = TueLogoBlue,text centered]
+  \node [block,anchor=west] at (\DiagLineNEpointSlide-\hdiffbot, (0.5*\LowerBorder-\paperheight) {%
+    \scriptsize{{\insertinstitute}}
+    };
+  }
+% Background picture title page
+\newcommand{\BackgroundPicture}{% Angle of slanted line is 74 degrees
+  \node [inner sep=0pt, anchor=north east] at (\paperwidth,-\TitleUpperBord-\ThinLineThk+\tol) {%
+     \includegraphics%
+     [height=\paperheight-\LowerBorder-\TitleUpperBord-\ThinLineThk-\ThinLineThk]%
+     {\titlebgimage}%
+     };
+  }
+% Background picture thank you page
+\newcommand{\BackgroundPictureThank}{% Angle of slanted line is 74 degrees
+  \node [inner sep=0pt, anchor=north east] at%
+     (\paperwidth,-\TitleUpperBord-\ThinLineThk) {%
+     \includegraphics%
+     [height=\paperheight-\LowerBorder-\TitleUpperBord%
+     -\ThinLineThk-\ThinLineThk]%
+     {\thankyoubgimage}%
+     };
+  }
+% Show the department
+\newcommand{\ShowDepartment}{ % Angle of slanted line is 74 degrees
+  \pgfmathsetmacro\hdiffbot{(\paperheight-\LowerBorder)*\DiagLineAngle} % 90-74 = 16
+  \tikzstyle{block} = [draw=none, color = TueLogoBlue,text centered]
+  \node [block,anchor=west] at (\DiagLineNEpointSlide-\hdiffbot, (0.5*\LowerBorder-\paperheight) {%
+    \scriptsize{{\insertinstitute}}
+    };
+  }
+% Draw largest red area on the left in the title page
+\newcommand{\DrawSlideNumberArea}{ % Angle of slanted line is 74 degrees
+  \pgfmathsetmacro\hdifftop{(\paperheight-\LowerBorder)*\DiagLineAngle} % 90-74 = 16
+  \pgfmathsetmacro\hdiffbot{(\paperheight)*\DiagLineAngle} % 90-74 = 16
+  \filldraw[draw=none, fill=TueLogoBlue]% Order: NW NE SE SW
+     (0                              ,-\paperheight+\LowerBorder)%
+  -- (\DiagLineNEpointSlide-\hdifftop,-\paperheight+\LowerBorder)%
+  -- (\DiagLineNEpointSlide-\hdiffbot,-\paperheight-\tol)%
+  -- (0                              ,-\paperheight-\tol);%
+  }
+% Draw large red area on the left in the table of contents page
+\newcommand{\DrawTOCArea}{ % Angle of slanted line is 74 degrees
+  \pgfmathsetmacro\hdifftop{(\UpperBord)*\DiagLineAngle} % 90-74 = 16
+  \pgfmathsetmacro\hdiffbot{(\paperheight-\LowerBorder)*\DiagLineAngle} % 90-74 = 16
+  \filldraw[draw=none, fill=TueCorpRed]% Order: NW NE SE SW
+     (0                              ,-\UpperBord-\ThinnerLineThk+0.5*\tol)%
+  -- (\DiagLineNEpointSlide-\hdifftop,-\UpperBord-\ThinnerLineThk+0.5*\tol)%
+  -- (\DiagLineNEpointSlide-\hdiffbot,-\paperheight+\LowerBorder)%
+  -- (0                              ,-\paperheight+\LowerBorder);%
+  }
+% Draw the logo on the regular slides
+\newcommand{\DrawLogo}{ % Angle of slanted line is 74 degrees
+  \pgfmathsetmacro\hdiff{(\UpperBord-\logoheightslides)*\DiagLineAngle} % 90-74 = 16
+   \node at (\logoslstrt*\logowidthslides+\DiagLineNEpointSlide-\hdiff-\LogoLineThkslides+\tol%
+           ,-\UpperBord+0.5*\logoheightslides-\tol)%
+           {\includegraphics[width=\logowidthslides]{logos/TueLogo}};
+  }
+% Show the page number
+\newcommand{\FrameNumber}{ % Angle of slanted line is 74 degrees
+  \pgfmathsetmacro\hdifftop{(\paperheight)*\DiagLineAngle} % Optional: \paperheight-0.5*\LowerBorder
+  \tikzstyle{block} = [draw=none, color = white,text centered]
+  \node [block] at (%
+   0.5*\DiagLineNEpointSlide-0.5*\hdifftop,% minus small correction
+  -\paperheight+0.5*\LowerBorder) {%
+    \ifthenelse{\equal{\totalframenumber}{true}}{
+      \tiny{{\insertframenumber/\inserttotalframenumber}}
+      }{
+      \scriptsize{{\insertframenumber}}
+      }{}
+    };
+  }
+% Footnote
+\newcommand\footn[1]{%
+\begin{tikzpicture}[remember picture,overlay]
+\node[outer sep=0pt,inner sep=0pt, anchor=west]
+  at ([xshift=0.5\paperwidth,yshift=0.5*\LowerBorder-\paperheight]current page.north west) {\tiny{#1}};
+\end{tikzpicture}%
+}
+
+
+% (\DiagLineNEpointTitl-\hdiffbot, (0.5*\LowerBorder-\paperheight)
+%
+
+% The minimal background for slides that are not the title slide:
+\newcommand{\drawbackground}[1][full]{%
+  \begin{tikzpicture}[remember picture,overlay]%
+
+  \DrawSlideNumberArea% The area in the lower left corner of the slide
+  \DrawLogo% Smaller logo on top of the lsides
+
+  \ifthenelse{\equal{#1}{full}}{% If not at a special slide: draw frame number
+    \FrameNumber
+    }{}{}
+
+  \ifthenelse{\equal{#1}{toc}}{% If at toc area: draw a red area on the left
+    \DrawTOCArea
+    }{}{}
+
+  \DrawLineHorTopReg% Horizontal line near top of title page
+  \DrawLineHorBotReg% Horizontal line near bottom of title page
+  \ShowDepartment% Department indication
+
+  \end{tikzpicture}%
+}
+
+
+\newenvironment{TitleSlide}
+ {
+  \setbeamertemplate{background canvas}%
+  {%
+    \begin{tikzpicture}[remember picture,overlay]%
+
+    \ifthenelse{\equal{\titlebgimage}{none}}{}{% Draw title background if it is specified
+      \BackgroundPicture% Draw largest red area on the left in the title page
+      }{}
+
+    \DrawTitleWestArea% Draw largest red area on the left in the title page
+    \DrawLineDiag% Diagonal line:
+    \DrawLineHorTop% Horizontal line near top of title page
+    \DrawLineHorBot% Horizontal line near bottom of title page
+    \TitleInnovStart% Text at bottom of title slide
+    \DrawLogoTitle% Logo in title page
+
+    \ifthenelse{\equal{\externalimage}{none}}{}{% Draw logo if it is specified
+      \DrawExternalImageTitl
+      }{}
+
+    % TITLE & SUBTITLE
+    \tikzstyle{block} = [draw=none, color = white]
+    \node (titlenode) [block,inner sep=0pt, anchor=north west] at%
+     (\TitleLRBord, -1.9*\TitleUpperBord) {%
+      \begin{varwidth}{0.55\paperwidth}
+      \Large\textbf{\inserttitle}\\
+      \vspace{-2mm}\\
+      \normalsize\textbf{\insertsubtitle}%
+      \end{varwidth}
+      };
+
+    % AUTHOR & DATE
+    \tikzstyle{block} = [draw=none, color = white,text centered]
+    \node [block,inner sep=0pt,anchor=north west] at (\TitleLRBord, -\paperheight*0.5) {%
+      \begin{varwidth}{\AuthorTextWidth}
+      \small{\insertauthor}\\
+      \small{\today}
+      \end{varwidth}};
+
+    % Committee members:
+    \tikzstyle{block} = [draw=none, color = white,text centered]
+    \node [block,inner sep=0pt,anchor=north west] at (\TitleLRBord, -\paperheight*0.7) {%
+      \begin{varwidth}{\AuthorTextWidth}
+      \small{\Committee}\\
+      \end{varwidth}};
+
+
+
+
+    \end{tikzpicture}%
+  }%
+  \begin{frame}%
+ }{%
+  \addtocounter{framenumber}{-1}
+  \end{frame}
+ }
+
+
+\newenvironment{TableOfContents}
+ {
+  \usebackgroundtemplate{\drawbackground[toc]}
+  \begin{frame}[plain]%
+ }
+ {
+ \addtocounter{framenumber}{-1}% this slide does not add to total slide count
+  \end{frame}
+ }
+
+
+\newenvironment{ThankYouPage}
+ {
+  \setbeamertemplate{background canvas}{%
+  \begin{tikzpicture}[remember picture,overlay]%
+
+  \ifthenelse{\equal{\thankyoubgimage}{none}}{}{% Draw picture if it is specified
+    \BackgroundPictureThank% Draw largest red area on the left in the thank you page
+    }{}
+
+  \DrawThankWestArea% Draw largest red area on the left in the thank you page
+  \DrawLineDiagThank% Diagonal line:
+  \DrawLineHorTop% Horizontal line near top
+  \DrawLineHorBot% Horizontal line near bottom
+  \ShowDepartmentThank% Text at bottom of title slide
+  \DrawLogoThank%
+
+  \ifthenelse{\equal{\externalimage}{none}}{}{% Draw logo if it is specified
+    \DrawExternalImageThank
+    }{}
+
+  % Main text
+  \tikzstyle{block} = [draw=none, color = white]
+  \node [block,anchor=north west] at%
+   (\TitleLRBord,-1.9*\TitleUpperBord) {%
+    \begin{varwidth}{\ThankyouTextWidth}
+    \LARGE\textbf{Thank you for your\\attention}
+    \end{varwidth}
+    };
+
+  \end{tikzpicture}%
+ }
+  \begin{frame}[plain]%
+ }
+ {
+ \addtocounter{framenumber}{-1}% this slide does not add to total slide count
+  \end{frame}
+ }
+
+\newenvironment{References}
+ {
+  \usebackgroundtemplate{\drawbackground[]}%
+  \begin{frame}[plain]%
+ }
+ {
+  \addtocounter{framenumber}{-1}% this slide does not add to total slide count
+  % Smaller font = abbrv
+  % Sort by the order in which they appear in the presentation = unsrt
+  \scriptsize{\bibliographystyle{unsrt}}%
+  \bibliography{references}
+  \end{frame}
+ }
+
+\newenvironment{BackupInfo}
+ {
+  \usebackgroundtemplate{\drawbackground[]}%
+  \begin{frame}[plain]%
+ }
+ {
+  \addtocounter{framenumber}{-1}% this slide does not add to total slide count
+  \end{frame}
+ }

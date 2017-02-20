@@ -1,0 +1,196 @@
+%!TEX ROOT = presentation.tex
+
+\RequirePackage{ifthen}
+\RequirePackage{pgfpages}
+\RequirePackage{phstyle}
+
+\newcommand{\hmar}{0.5}% For handouts, factor to make slides smaller so they fit side by side
+
+\newcommand{\spp}{1}% Slides per page (for handouts), default option = 1 slide per page
+\DeclareOptionBeamer{slidesperpage}{\renewcommand{\spp}{#1}}
+
+\newcommand{\titlebgimage}{none}% Get the title background picture from the tex file
+\DeclareOptionBeamer{titlebgimage}{\renewcommand{\titlebgimage}{#1}}
+
+\newcommand{\thankyoubgimage}{none}% Get the thank you background picture from the tex file
+\DeclareOptionBeamer{thankyoubgimage}{\renewcommand{\thankyoubgimage}{#1}}
+
+\newcommand{\externalimage}{none}% Get the thank you background picture from the tex file
+\DeclareOptionBeamer{externalimage}{\renewcommand{\externalimage}{#1}}
+
+\newcommand{\totalframenumber}{1}% Page numbering: 1, 2, 3 or 1/tot 2/tot 3/tot
+\DeclareOptionBeamer{totalframenumber}{\renewcommand{\totalframenumber}{#1}}
+
+\ProcessOptionsBeamer 
+ 
+\pgfpagesdeclarelayout{6 on 1} % Handout 6 per page
+{
+  \edef\pgfpageoptionheight{\the\paperwidth} % landscaped by default
+  \edef\pgfpageoptionwidth{\the\paperheight}
+  \def\pgfpageoptionborder{0pt}
+  \def\pgfpageoptionfirstshipout{1}
+}
+{
+  \pgfpagesphysicalpageoptions
+  {%
+    logical pages=6,%
+    physical height=\pgfpageoptionheight,%
+    physical width=\pgfpageoptionwidth,%
+    current logical shipout=\pgfpageoptionfirstshipout%
+  }
+  % stack on top of one another
+  \pgfpageslogicalpageoptions{1}
+  {%
+    border shrink=\pgfpageoptionborder,%
+    resized width=\hmar\pgfphysicalwidth,%
+    resized height=\pgfphysicalheight,%
+    center=\pgfpoint{.25\pgfphysicalwidth}{.8333\pgfphysicalheight}%
+  }%
+  \pgfpageslogicalpageoptions{3}
+  {%
+    border shrink=\pgfpageoptionborder,%
+    resized width=\hmar\pgfphysicalwidth,%
+    resized height=\pgfphysicalheight,%
+    center=\pgfpoint{.25\pgfphysicalwidth}{.5\pgfphysicalheight}%
+  }%
+  \pgfpageslogicalpageoptions{5}
+  {%
+    border shrink=\pgfpageoptionborder,%
+    resized width=\hmar\pgfphysicalwidth,%
+    resized height=\pgfphysicalheight,%
+    center=\pgfpoint{.25\pgfphysicalwidth}{.1667\pgfphysicalheight}%
+  }%
+  \pgfpageslogicalpageoptions{2}
+  {%
+    border shrink=\pgfpageoptionborder,%
+    resized width=\hmar\pgfphysicalwidth,%
+    resized height=\pgfphysicalheight,%
+    center=\pgfpoint{.75\pgfphysicalwidth}{.8333\pgfphysicalheight}%
+  }%
+  \pgfpageslogicalpageoptions{4}
+  {%
+    border shrink=\pgfpageoptionborder,%
+    resized width=\hmar\pgfphysicalwidth,%
+    resized height=\pgfphysicalheight,%
+    center=\pgfpoint{.75\pgfphysicalwidth}{.5\pgfphysicalheight}%
+  }%
+  \pgfpageslogicalpageoptions{6}
+  {%
+    border shrink=\pgfpageoptionborder,%
+    resized width=\hmar\pgfphysicalwidth,%
+    resized height=\pgfphysicalheight,%
+    center=\pgfpoint{.75\pgfphysicalwidth}{.1667\pgfphysicalheight}%
+  }%
+}
+
+
+\pgfpagesdeclarelayout{10 on 1} % Handout 10 per page
+{
+  \edef\pgfpageoptionheight{\the\paperwidth} % landscaped by default
+  \edef\pgfpageoptionwidth{\the\paperheight}
+  \def\pgfpageoptionborder{0pt}
+  \def\pgfpageoptionfirstshipout{1}
+}
+{
+  \pgfpagesphysicalpageoptions
+  {%
+    logical pages=10,%
+    physical height=\pgfpageoptionheight,%
+    physical width=\pgfpageoptionwidth,%
+    current logical shipout=\pgfpageoptionfirstshipout%
+  }
+  % put side-by-side
+  \pgfpageslogicalpageoptions{1}
+  {%
+    border shrink=\pgfpageoptionborder,%
+    resized width=\hmar\pgfphysicalwidth,%
+    resized height=\pgfphysicalheight,%
+    center=\pgfpoint{.25\pgfphysicalwidth}{.9\pgfphysicalheight}%
+  }%
+  \pgfpageslogicalpageoptions{3}
+  {%
+    border shrink=\pgfpageoptionborder,%
+    resized width=\hmar\pgfphysicalwidth,%
+    resized height=\pgfphysicalheight,%
+    center=\pgfpoint{.25\pgfphysicalwidth}{.7\pgfphysicalheight}%
+  }%
+  \pgfpageslogicalpageoptions{5}
+  {%
+    border shrink=\pgfpageoptionborder,%
+    resized width=\hmar\pgfphysicalwidth,%
+    resized height=\pgfphysicalheight,%
+    center=\pgfpoint{.25\pgfphysicalwidth}{.5\pgfphysicalheight}%
+  }%
+  \pgfpageslogicalpageoptions{7}
+  {%
+    border shrink=\pgfpageoptionborder,%
+    resized width=\hmar\pgfphysicalwidth,%
+    resized height=\pgfphysicalheight,%
+    center=\pgfpoint{.25\pgfphysicalwidth}{.3\pgfphysicalheight}%
+  }%
+  \pgfpageslogicalpageoptions{9}
+  {%
+    border shrink=\pgfpageoptionborder,%
+    resized width=\hmar\pgfphysicalwidth,%
+    resized height=\pgfphysicalheight,%
+    center=\pgfpoint{.25\pgfphysicalwidth}{.1\pgfphysicalheight}%
+  }%
+  \pgfpageslogicalpageoptions{2}
+  {%
+    border shrink=\pgfpageoptionborder,%
+    resized width=\hmar\pgfphysicalwidth,%
+    resized height=\pgfphysicalheight,%
+    center=\pgfpoint{.75\pgfphysicalwidth}{.9\pgfphysicalheight}%
+  }%
+  \pgfpageslogicalpageoptions{4}
+  {%
+    border shrink=\pgfpageoptionborder,%
+    resized width=\hmar\pgfphysicalwidth,%
+    resized height=\pgfphysicalheight,%
+    center=\pgfpoint{.75\pgfphysicalwidth}{.7\pgfphysicalheight}%
+  }%
+  \pgfpageslogicalpageoptions{6}
+  {%
+    border shrink=\pgfpageoptionborder,%
+    resized width=\hmar\pgfphysicalwidth,%
+    resized height=\pgfphysicalheight,%
+    center=\pgfpoint{.75\pgfphysicalwidth}{.5\pgfphysicalheight}%
+  }%
+  \pgfpageslogicalpageoptions{8}
+  {%
+    border shrink=\pgfpageoptionborder,%
+    resized width=\hmar\pgfphysicalwidth,%
+    resized height=\pgfphysicalheight,%
+    center=\pgfpoint{.75\pgfphysicalwidth}{.3\pgfphysicalheight}%
+  }%
+  \pgfpageslogicalpageoptions{10}
+  {%
+    border shrink=\pgfpageoptionborder,%
+    resized width=\hmar\pgfphysicalwidth,%
+    resized height=\pgfphysicalheight,%
+    center=\pgfpoint{.75\pgfphysicalwidth}{.1\pgfphysicalheight}%
+  }%
+}
+
+
+% Use the above layout functions, based on user input for spp
+\ifthenelse{\equal{\spp}{2}}{\pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]}{}
+\ifthenelse{\equal{\spp}{3}}{\pgfpagesuselayout{3 on 1}[a4paper,border shrink=5mm]}{}
+\ifthenelse{\equal{\spp}{4}}{\pgfpagesuselayout{4 on 1}[a4paper,border shrink=5mm,landscape]}{}
+\ifthenelse{\equal{\spp}{6}}{\pgfpagesuselayout{6 on 1}[a4paper,border shrink=5mm]}{}
+\ifthenelse{\equal{\spp}{8}}{\pgfpagesuselayout{8 on 1}[a4paper,border shrink=3mm]}{}
+\ifthenelse{\equal{\spp}{10}}{\pgfpagesuselayout{10 on 1}[a4paper,border shrink=0mm]}{}
+
+% Draw borders around each slide if they are handouts
+\pgfpageslogicalpageoptions{1}{border  code=\pgfusepath{stroke}}
+\pgfpageslogicalpageoptions{2}{border  code=\pgfusepath{stroke}}
+\pgfpageslogicalpageoptions{3}{border  code=\pgfusepath{stroke}}
+\pgfpageslogicalpageoptions{4}{border  code=\pgfusepath{stroke}}
+\pgfpageslogicalpageoptions{5}{border  code=\pgfusepath{stroke}}
+\pgfpageslogicalpageoptions{6}{border  code=\pgfusepath{stroke}}
+\pgfpageslogicalpageoptions{7}{border  code=\pgfusepath{stroke}}
+\pgfpageslogicalpageoptions{8}{border  code=\pgfusepath{stroke}}
+\pgfpageslogicalpageoptions{9}{border  code=\pgfusepath{stroke}}
+\pgfpageslogicalpageoptions{10}{border code=\pgfusepath{stroke}}
+
+\mode<presentation>

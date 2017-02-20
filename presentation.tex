@@ -1,0 +1,92 @@
+% !TEX program = XeTeX
+\documentclass[12pt, aspectratio=149]{beamer}% aspectratio's: 169, 1610, 149, 54, 43 and 32
+\graphicspath{{images/},
+			  {logos/},
+			  {MathAnimation/},
+			  {../Thesis_report_Wesley/Figures/}}
+
+
+% For MAC users: change the builder to LuaLaTex
+
+% Instructions to get this template working:
+%  - For windows users: install MikTex (explicitely!) as admin,
+%    otherwise you get the error the error:
+%    "Sorry, but "MiKTeX Compiler Driver" did not succeed."
+%  - Use MiTex to install cm-super, otherwise your font may be pixxellated
+
+
+% Best practices/tips:
+%  - Select aspect ratio (see line 2), so you don't have black borders with your specific beamer
+%
+%  - Code to show side by side figures:
+% 	 \begin{columns}
+% 	   \column{\dimexpr\paperwidth}
+% 	   \begin{figure}
+% 	   	\includegraphics[width=0.46\textwidth]{image1}
+%             \hspace{\dimexpr0.02\textwidth}
+% 	    \includegraphics[width=0.46\textwidth]{image2}
+% 	   \end{figure}
+% 	 \end{columns}
+
+
+% Usetheme options, see below:
+% 	- titlebgimage = image on title slide. Please make
+% 	  sure to crop the top or bottom if it's too tall
+% 	- thankyoubgimage = image on the thank you slide
+%   - External institute or company logo on title and thank you page
+% 	- totalframenumber = for page numbering, an option to
+%     show the total amount of frame numbers on each frame
+%   - slidesperpage = option to make handouts
+\usetheme[
+titlebgimage      = TitleImage_Crack,
+thankyoubgimage   = logos/MoM_Microscope_Cropped,
+% externalimage     = logos/CompanyLogo,
+totalframenumber  = true,
+slidesperpage     = 1
+]{phstyle}
+
+\title    {Presentation title goes here}% Set title
+\subtitle {Subtitle goes here}% Set subtitle
+\author   {Firstname Lastname}% author
+\institute{Mechanics of Materials}% institute (department)
+
+\newcommand{\Committee}{% Set committee members:
+Supervisors:\\
+Dr. Ir. initials \& Lastname,\\
+Dr. Ir. initials \& Lastname}% title slide: committee members
+
+
+\begin{document}
+
+\begin{TitleSlide}\end{TitleSlide}% Title
+
+% Table of contents:
+% 	To change item separation distance: the value between the [t]'s
+% 	To change horizontal placement: change size of the parbox
+%   To change vertical placement: change the vspace
+	\begin{TableOfContents}
+	\vspace{2mm}
+	\hfill\parbox{.72\textwidth}{
+	\begin{minipage}[t][4cm][t]{\textwidth}
+	\tableofcontents
+	\end{minipage}}
+	\end{TableOfContents}
+
+% Subjects, sorted by "chapters":
+	\input{content/Introduction}
+	\input{content/Section_1}
+	\input{content/Section_2}
+	\input{content/Section_3}
+	\input{content/Conclusions}
+
+
+\begin{References}\end{References}% Page with literature citations
+
+\begin{ThankYouPage}\end{ThankYouPage}% Thank you slide
+
+% Loose slides which contain info to answer questions
+% Notice here that \begin{frame} is replaced with \begin{BackupInfo}
+\input{content/CH_BackupInfo}
+
+
+\end{document}
